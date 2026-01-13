@@ -1,0 +1,87 @@
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sparkling Pulsing Love</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 150px;
+    color: #ff3366;
+    text-transform: uppercase;
+    animation: pulse 1s infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); text-shadow: 0 0 10px #ff3366; }
+    50% { transform: scale(1.2); text-shadow: 0 0 30px #ff99cc, 0 0 50px #ff66aa; }
+    100% { transform: scale(1); text-shadow: 0 0 10px #ff3366; }
+  }
+
+  /* Sparkle style */
+  .sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkleAnim 1s linear infinite;
+  }
+
+  @keyframes sparkleAnim {
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); }
+  }
+</style>
+</head>
+<body>
+
+<h1 id="love">LOVE</h1>
+
+<script>
+const love = document.getElementById('love');
+
+function createSparkle() {
+  const sparkle = document.createElement('div');
+  sparkle.className = 'sparkle';
+  
+  // randomize direction and distance
+  const x = (Math.random() - 0.5) * 200 + 'px';
+  const y = (Math.random() - 0.5) * 200 + 'px';
+  sparkle.style.setProperty('--x', x);
+  sparkle.style.setProperty('--y', y);
+  
+  // random start position on LOVE
+  const rect = love.getBoundingClientRect();
+  sparkle.style.left = (rect.left + rect.width/2) + 'px';
+  sparkle.style.top = (rect.top + rect.height/2) + 'px';
+  
+  document.body.appendChild(sparkle);
+  
+  setTimeout(() => {
+    sparkle.remove();
+  }, 1000); // remove after animation ends
+}
+
+// create sparkles continuously
+setInterval(createSparkle, 100);
+</script>
+
+</body>
+</html>
+
+
